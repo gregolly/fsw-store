@@ -1,9 +1,26 @@
-import { HomeIcon, ListOrderedIcon, LogInIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from "lucide-react";
+"use client"
+
+import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import { signIn, signOut } from "next-auth/react";
+
+import { useSession } from "next-auth/react"
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Separator } from "./separator";
 
 export const Header = () => {
+    const { status, data } = useSession()
+
+    const handleLoginClick = async () => {
+        await signIn()
+    }
+
+    const handleLogoutClick = async () => {
+        await signOut()
+    }
+
     return (
         <Card className="flex justify-between p-[1.875rem] items-center">
             <Sheet>
@@ -19,12 +36,30 @@ export const Header = () => {
                         Menu
                     </SheetHeader>
 
-                    <div className="mt-2 flex flex-col gap-3">
-                        <Button variant="outline" className="w-full justify-start gap-2">
-                            <LogInIcon size={16} />
-                            Fazer Login
-                        </Button>
+                    {status === 'authenticated' && data.user && (
+                        <>
+                            <div className="flex items-center gap-2 py-4">
+                                <Avatar>
+                                    <AvatarFallback>
+                                        {data.user?.name?.[0].toUpperCase()}
+                                    </AvatarFallback>
 
+                                    {data.user.image && (
+                                        <AvatarImage src={data.user.image} />
+                                    )}
+                                </Avatar>
+
+                                <div className="flex flex-col">
+                                    <p className="font-medium text-gray-300">{ data.user.name }</p>
+                                    <p className="text-gray-500 text-sm">Boas compras!</p>
+                                </div>
+                            </div>
+
+                            <Separator className="mb-4" />
+                        </>
+                    )}
+
+                    <div className="mt-2 flex flex-col gap-3">
                         <Button variant="outline" className="w-full justify-start gap-2">
                             <HomeIcon size={16} />
                             Inicio
@@ -39,6 +74,18 @@ export const Header = () => {
                             <ListOrderedIcon size={16} />
                             Catalogo
                         </Button>
+
+                        {status === 'unauthenticated' ? (
+                            <Button variant="outline" className="w-full justify-start gap-2" onClick={handleLoginClick}>
+                                <LogInIcon size={16} />
+                                Fazer Login
+                            </Button>
+                        ) : (
+                            <Button variant="outline" className="w-full justify-start gap-2" onClick={handleLogoutClick}>
+                                <LogOutIcon size={16} />
+                                Fazer Logout
+                            </Button>
+                        )}
                     </div>
                 </SheetContent>
             </Sheet>
