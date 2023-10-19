@@ -1,8 +1,9 @@
-import { formattedPrice } from "@/helpers/fomattedPrice"
 import { ProductsWithTotalPrice } from "@/helpers/product"
-import Image from 'next/image'
-import { Badge } from "./badge"
+import { formattedPrice } from "@/helpers/fomattedPrice"
 import { ArrowDownIcon } from "lucide-react"
+import { Badge } from "./badge"
+
+import Image from 'next/image'
 
 interface ProductItemProps {
     product: ProductsWithTotalPrice
