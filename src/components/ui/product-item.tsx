@@ -13,8 +13,8 @@ export const ProductItem = ({ product }: ProductItemProps) => {
     const firstImage = product.imageUrls[0]
 
     return (
-        <div className="flex flex-col gap-4 w-[170px]">
-            <div className="relative bg-accent rounded-lg h-[170px] w-[170px] flex items-center justify-center max-w-[156px]">
+        <div className="flex flex-col gap-4">
+            <div className="relative bg-accent rounded-lg h-[170px] w-full flex items-center justify-center max-w-[156px]">
                 <Image 
                     src={firstImage} 
                     alt={product.name} 

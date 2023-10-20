@@ -9,7 +9,12 @@ interface ProductListProps {
 export const ProductList = ({ products }: ProductListProps) => {
     return (
         <div className="flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-            {products.map((product) => <ProductItem product={computeProductTotalPrice(product)} key={product.id} />)}
+            {products.map((product) => (
+                    <div key={product.id} className="w-[170px] max-w-[170px]">
+                        <ProductItem product={computeProductTotalPrice(product)} />
+                    </div>
+                )
+            )}
         </div>
     )
 }
