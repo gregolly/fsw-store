@@ -5,16 +5,15 @@ import { computeProductTotalPrice } from "@/helpers/product"
 import { prismaClient } from "@/lib/prisma"
 
 const CategoryProducts = async ({ params }: any) => {
-    const category = await prismaClient.category.findFirst({
+    const products = await prismaClient.product.findMany({
         where: {
-            slug: params.slug
+            category: {
+                slug: params.slug
+            }
         },
-        include: {
-            products: true
-        }
     })
 
-    if(!category) return null
+    if(!products) return null
 
     return (
         <div className="p-5 flex flex-col gap-8">
@@ -24,7 +23,7 @@ const CategoryProducts = async ({ params }: any) => {
             </Badge>
 
             <div className="grid grid-cols-2 gap-8">
-                {category.products.map(product => <ProductItem key={product.id} product={computeProductTotalPrice(product)} />)}
+                {products.map(product => <ProductItem key={product.id} product={computeProductTotalPrice(product)} />)}
             </div>
         </div>
     )
