@@ -3,12 +3,14 @@
 import { HomeIcon, ListOrderedIcon, LogInIcon, LogOutIcon, MenuIcon, PercentIcon, ShoppingCartIcon } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
 import { signIn, signOut } from "next-auth/react";
 
 import { useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
+
+import Link from 'next/link'
 
 export const Header = () => {
     const { status, data } = useSession()
@@ -60,20 +62,28 @@ export const Header = () => {
                     )}
 
                     <div className="mt-2 flex flex-col gap-3">
-                        <Button variant="outline" className="w-full justify-start gap-2">
-                            <HomeIcon size={16} />
-                            Inicio
-                        </Button>
+                        <SheetClose asChild>
+                            <Link href="/">
+                                <Button variant="outline" className="w-full justify-start gap-2">
+                                    <HomeIcon size={16} />
+                                    Inicio
+                                </Button>
+                            </Link>
+                        </SheetClose>
 
                         <Button variant="outline" className="w-full justify-start gap-2">
                             <PercentIcon size={16} />
                             Ofertas
                         </Button>
 
-                        <Button variant="outline" className="w-full justify-start gap-2">
-                            <ListOrderedIcon size={16} />
-                            Catalogo
-                        </Button>
+                        <SheetClose asChild>
+                            <Link href="/catalog">
+                                <Button variant="outline" className="w-full justify-start gap-2">
+                                    <ListOrderedIcon size={16} />
+                                    Catalogo
+                                </Button>
+                            </Link>
+                        </SheetClose>
 
                         {status === 'unauthenticated' ? (
                             <Button variant="outline" className="w-full justify-start gap-2" onClick={handleLoginClick}>
