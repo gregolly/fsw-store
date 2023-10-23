@@ -85,7 +85,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
     // se não, adicione o produto à lista
     setProducts((prev) => [...prev, product])
-  };
+  }
 
   const decreaseProductQuantity = (productId: string) => {
     setProducts((prev) =>
