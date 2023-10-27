@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
 
 import Link from 'next/link'
+import { Cart } from "./cart";
 
 export const Header = () => {
     const { status, data } = useSession()
@@ -105,12 +106,23 @@ export const Header = () => {
             </Sheet>
 
 
+            <Link href="/">
+                <h1 className="font-semibold text-lg">
+                    <span className="text-primary">FSW</span> Store
+                </h1>
+            </Link>
 
-            <h1 className="font-semibold text-lg"><span className="text-primary">FSW</span> Store</h1>
+            <Sheet>
+                <SheetTrigger asChild>
+                    <Button size="icon" variant="outline">
+                        <ShoppingCartIcon />
+                    </Button>
+                </SheetTrigger>
 
-            <Button size="icon" variant="outline">
-                <ShoppingCartIcon />
-            </Button>
+                <SheetContent>
+                    <Cart />
+                </SheetContent>
+            </Sheet>
         </Card>
     )
 }
