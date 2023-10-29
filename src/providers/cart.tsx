@@ -98,9 +98,9 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
             };
           }
 
-          return cartProduct;
+          return cartProduct
         })
-        .filter((cartProduct) => cartProduct.quantity > 0),
+        // .filter((cartProduct) => cartProduct.quantity > 0),
     )
   }
 
