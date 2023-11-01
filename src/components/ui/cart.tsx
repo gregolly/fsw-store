@@ -24,7 +24,7 @@ export const Cart = () => {
                 {products.map(product => 
                     <CartItem 
                         key={product.id} 
-                        product={computeProductTotalPrice(products as any) as any} 
+                        product={computeProductTotalPrice(product as any) as any} 
                      />
                 )}
             </div>
