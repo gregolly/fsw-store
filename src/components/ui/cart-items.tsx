@@ -10,6 +10,8 @@ interface CartItemProps {
 }
 
 export const CartItem = ({ product }: CartItemProps) => {
+    const firstImageUrl = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls[0] : ""
+
     const {
         decreaseProductQuantity,
         increaseProductQuantity,
@@ -32,7 +34,7 @@ export const CartItem = ({ product }: CartItemProps) => {
         <div className="flex items-center justify-between">
             <div className="flex h-[77px] w-[77px] items-center justify-center rounded-lg bg-accent">
                 <Image
-                    src={product?.imageUrls[0]}
+                    src={firstImageUrl}
                     width={0}
                     height={0}
                     sizes="100vw"
@@ -46,11 +48,11 @@ export const CartItem = ({ product }: CartItemProps) => {
 
                 <div className="flex items-center gap-2">
                     <p className="text-sm font-bold">
-                        R$ {formattedPrice(product.totalPrice)}
+                        {formattedPrice(product.totalPrice)}
                     </p>
                     {product.discountPercentage > 0 && (
                     <p className="text-xs line-through opacity-75">
-                        R$ {formattedPrice(Number(product.basePrice))}
+                        {formattedPrice(Number(product.basePrice))}
                     </p>
                     )}
                 </div>
