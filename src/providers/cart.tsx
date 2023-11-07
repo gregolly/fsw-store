@@ -35,7 +35,7 @@ export const CartContext = createContext<ICartContext>({
   removeProductFromCart: () => {},
 });
 
-const CartProvider = ({ children }: { children: ReactNode }) => {
+export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<CartProduct[]>([])
 
   useEffect(() => {
@@ -147,7 +147,5 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </CartContext.Provider>
-  );
-};
-
-export default CartProvider
+  )
+}
