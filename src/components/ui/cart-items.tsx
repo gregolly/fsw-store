@@ -31,7 +31,7 @@ export const CartItem = ({ product }: CartItemProps) => {
     }
 
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-3">
             <div className="flex h-[77px] w-[77px] items-center justify-center rounded-lg bg-accent">
                 <Image
                     src={firstImageUrl}
