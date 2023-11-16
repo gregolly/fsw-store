@@ -4,15 +4,27 @@ import { useContext } from "react"
 import { CartContext } from "@/providers/cart"
 import { CartItem } from "./cart-items"
 import { computeProductTotalPrice } from "@/helpers/product"
-import { useSession } from "next-auth/react"
 import { Separator } from "./separator"
 import { formattedPrice } from "@/helpers/fomattedPrice"
 import { ScrollArea } from "./scroll-area"
 import { Button } from "./button"
+import { createCheckout } from "@/actions/checkout"
+import { loadStripe } from "@stripe/stripe-js"
 
 export const Cart = () => {
-    const { data } = useSession()
     const { products, subtotal, total, totalDiscount } = useContext(CartContext)
+
+    const handleFinishPurchaseClick = async () => {
+        const checkout = await createCheckout(products)
+
+        const stripe = await loadStripe(
+            process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+        )
+
+        stripe?.redirectToCheckout({
+            sessionId: checkout.id
+        })
+    }
 
     return (
         <div className="flex flex-col gap-8 h-full">
@@ -60,17 +72,17 @@ export const Cart = () => {
 
                     <div className="flex items-center justify-between text-xs">
                         <p>Desconto</p>
-                        <p>- {formattedPrice(totalDiscount)}</p>
+                        <p>{products.length > 0 ? "-" + formattedPrice(totalDiscount) : ""}</p>
                     </div>
 
                     <Separator />
 
                     <div className="flex items-center justify-between text-sm font-bold">
                         <p>Total</p>
-                        <p>Total: {products.length > 0 ? formattedPrice(total) : ""}</p>
+                        <p>{products.length > 0 ? formattedPrice(total) : ""}</p>
                     </div>
 
-                    <Button className="uppercase font-bold mt-7">Finalizar compra</Button>
+                    <Button onClick={handleFinishPurchaseClick} className="uppercase font-bold mt-7">Finalizar compra</Button>
             </div>
         </div>
     )
