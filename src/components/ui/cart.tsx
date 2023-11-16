@@ -53,7 +53,8 @@ export const Cart = () => {
                 </ScrollArea>
             </div>
 
-            <div className="flex flex-col gap-5">
+            {products.length > 0 && (
+                <div className="flex flex-col gap-5">
                     <Separator />
 
                     <div className="flex items-center justify-between text-xs">
@@ -83,7 +84,8 @@ export const Cart = () => {
                     </div>
 
                     <Button onClick={handleFinishPurchaseClick} className="uppercase font-bold mt-7">Finalizar compra</Button>
-            </div>
+                </div>
+            )}
         </div>
     )
 }
