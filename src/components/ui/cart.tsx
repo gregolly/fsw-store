@@ -11,6 +11,7 @@ import { Button } from "./button"
 import { loadStripe } from "@stripe/stripe-js"
 import { createOrder } from "@/actions/order"
 import { useSession } from "next-auth/react"
+import { createCheckout } from "@/actions/checkout"
 
 export const Cart = () => {
     const { data } = useSession()
@@ -21,7 +22,11 @@ export const Cart = () => {
             return
         }
 
-        const checkout = await createOrder(products, (data?.user as any).id)
+        console.log(data.user)
+
+        await createOrder(products, (data?.user as any).id)
+
+        const checkout = await createCheckout(products)
 
         const stripe = await loadStripe(
             process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
