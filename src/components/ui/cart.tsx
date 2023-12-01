@@ -8,14 +8,20 @@ import { Separator } from "./separator"
 import { formattedPrice } from "@/helpers/fomattedPrice"
 import { ScrollArea } from "./scroll-area"
 import { Button } from "./button"
-import { createCheckout } from "@/actions/checkout"
 import { loadStripe } from "@stripe/stripe-js"
+import { createOrder } from "@/actions/order"
+import { useSession } from "next-auth/react"
 
 export const Cart = () => {
+    const { data } = useSession()
     const { products, subtotal, total, totalDiscount } = useContext(CartContext)
 
     const handleFinishPurchaseClick = async () => {
-        const checkout = await createCheckout(products)
+        if (!data?.user) {
+            return
+        }
+
+        const checkout = await createOrder(products, (data?.user as any).id)
 
         const stripe = await loadStripe(
             process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY
