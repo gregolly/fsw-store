@@ -1,5 +1,5 @@
 import { ProductsWithTotalPrice } from "@/helpers/product"
-import { formattedPrice } from "@/helpers/fomattedPrice"
+import { formattedPrice } from "@/helpers/formattedPrice"
 import { ArrowDownIcon } from "lucide-react"
 import { Badge } from "./badge"
 

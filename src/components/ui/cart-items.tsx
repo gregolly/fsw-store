@@ -3,7 +3,7 @@ import Image from "next/image"
 import { useContext } from "react"
 import { Button } from "./button"
 import { ArrowLeftIcon, ArrowRightIcon, TrashIcon } from "lucide-react"
-import { formattedPrice } from "@/helpers/fomattedPrice"
+import { formattedPrice } from "@/helpers/formattedPrice"
 
 interface CartItemProps {
     product: CartProduct
